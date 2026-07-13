@@ -4,22 +4,23 @@
 
   const config = window.CHANNEL_CONFIG;
   const stateText = document.getElementById("broadcast-state");
-  const startButton = document.getElementById("start-button");
-  const startLabel = document.getElementById("start-label");
   const playButton = document.getElementById("play-button");
   const playLabel = document.getElementById("play-label");
   const playIcon = document.getElementById("play-icon");
+
   document.querySelectorAll("[data-channel-name]").forEach((node) => { node.textContent = config.channelName; });
   document.title = config.channelName;
 
   let player;
   let currentIndex = -1;
   let isPlaying = false;
-  let firstStart = true;
+  
+  // This tracks whether the channel has been turned on yet
+  let firstStart = true; 
 
   function positionAt(now = Date.now()) {
     const total = config.videos.reduce((sum, video) => sum + video.durationSeconds, 0);
-    if (!total) throw new Error("Add at least one video to playlist.js");
+    if (!total) throw new Error("Add at least one video to config.");
     let cursor = Math.max(0, Math.floor((now - Date.parse(config.epoch)) / 1000)) % total;
     for (let index = 0; index < config.videos.length; index += 1) {
       if (cursor < config.videos[index].durationSeconds) return { index, offset: cursor };
@@ -30,10 +31,21 @@
 
   function updateControls(playing) {
     isPlaying = playing;
-    playLabel.textContent = playing ? "Pause" : "Play";
-    playIcon.textContent = playing ? "Ⅱ" : "▶";
+    
+    // SEQUENCE 1: Before the channel is turned on
+    if (firstStart && !playing) {
+      playLabel.textContent = "Turn on channel";
+      playIcon.textContent = "▶";
+      stateText.textContent = "Channel ready";
+    } 
+    // SEQUENCE 2: After it's turned on (Standard Play/Pause)
+    else {
+      playLabel.textContent = playing ? "Pause" : "Play";
+      playIcon.textContent = playing ? "Ⅱ" : "▶";
+      stateText.textContent = playing ? "On air" : "Paused";
+    }
+    
     playButton.setAttribute("aria-label", playing ? "Pause channel" : "Play channel");
-    stateText.textContent = playing ? "On air" : "Paused";
   }
 
   function tuneToNow(autoplay) {
@@ -52,13 +64,19 @@
 
   function togglePlayback() {
     if (!player) return;
-    if (isPlaying) player.pauseVideo();
-    else {
+    
+    // SEQUENCE 1: The very first click
+    if (firstStart) {
+      firstStart = false; // Turn off the "Turn on" state permanently
+      playLabel.textContent = "Tuning in..."; // Temporary loading text
       tuneToNow(true);
-      if (firstStart) {
-        firstStart = false;
-        startButton.hidden = true;
-        playButton.disabled = false;
+    } 
+    // SEQUENCE 2: All subsequent clicks (Play/Pause)
+    else {
+      if (isPlaying) {
+        player.pauseVideo();
+      } else {
+        tuneToNow(true);
       }
     }
   }
@@ -81,9 +99,9 @@
       },
       events: {
         onReady: () => {
-          startButton.disabled = false;
-          startLabel.textContent = "Turn on channel";
-          stateText.textContent = "Channel ready";
+          playButton.disabled = false;
+          // Initializes the UI with the "Turn on channel" state
+          updateControls(false); 
         },
         onStateChange: (event) => {
           if (event.data === YT.PlayerState.PLAYING) updateControls(true);
@@ -95,7 +113,6 @@
     });
   };
 
-  startButton.addEventListener("click", togglePlayback);
   playButton.addEventListener("click", togglePlayback);
   setInterval(() => { if (isPlaying) tuneToNow(true); }, 5000);
 

@@ -12,35 +12,46 @@
   <body>
     <main class="channel-shell">
       <div class="noise" aria-hidden="true"></div>
+      
       <header class="masthead">
-        <div class="brand"><span class="signal-dot" aria-hidden="true"></span><span data-channel-name>Curated Time TV</span></div>
+        <div class="brand">
+          <span class="signal-dot" aria-hidden="true"></span>
+          <span data-channel-name>Curated Time TV</span>
+        </div>
         <p class="broadcast-state" id="broadcast-state">Preparing the channel</p>
       </header>
 
       <section class="stage" aria-label="Live channel player">
         <div class="screen-frame">
           <div class="screen">
-            <div class="player-crop"><div id="youtube-player" class="youtube-player"></div></div>
+            <div class="player-crop">
+              <div id="youtube-player" class="youtube-player"></div>
+            </div>
             <div class="player-shield" aria-hidden="true"></div>
             <div class="scanlines" aria-hidden="true"></div>
-            <button type="button" class="start-button" id="start-button" disabled>
-              <span class="start-icon" aria-hidden="true">▶</span>
-              <span id="start-label">Tuning in…</span>
-            </button>
-          </div>
+            
+            </div>
 
           <div class="console">
             <div>
               <p class="eyebrow">Continuous broadcast</p>
               <p class="console-note">You are watching the current program.</p>
             </div>
-            <button type="button" class="play-button" id="play-button" disabled aria-label="Play channel">
-              <span id="play-icon" aria-hidden="true">▶</span><span id="play-label">Play</span>
-            </button>
+            
+            <div class="console-controls">
+              <button type="button" class="play-button" id="play-button" disabled aria-label="Play channel">
+                <span id="play-icon" aria-hidden="true">▶</span>
+                <span id="play-label">Play</span>
+              </button>
+            </div>
           </div>
+          
         </div>
       </section>
-      <footer><p>Programming repeats continuously. Rejoin at any time.</p></footer>
+
+      <footer>
+        <p>Programming repeats continuously. Rejoin at any time.</p>
+      </footer>
     </main>
   </body>
 </html>
