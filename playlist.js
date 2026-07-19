@@ -1,102 +1,215 @@
-// This is the only file you need to edit to change the channel.
+// Edit this file to change the channel schedule.
+// Times are in IST (Asia/Kolkata). Videos inside each slot loop until the next slot begins.
 window.CHANNEL_CONFIG = {
   channelName: "Curated Time TV",
+  timeZone: "Asia/Kolkata",
+  timeZoneOffsetMinutes: 330,
 
-  // A fixed past date anchors the repeating schedule for every visitor.
-  epoch: "2026-01-01T00:00:00Z",
-
-  // 35-Video Curated Block Schedule
-  // Designed to cycle: Cinema -> Cartoon -> Educational -> Cartoon -> Educational
-  videos: [
-
-    // ==========================================
-    // BLOCK 1
-    // ==========================================
-    // Cinema: Charlie Chaplin - Modern Times (1h 27m)
-    { id: "eg31f8P2DIY", durationSeconds: 5238 },
-    // Cartoon: Tom & Jerry Vol 31 (40m)
-    { id: "mkPLXTXY2WY", durationSeconds: 2453 },
-    // Educational: Veritasium - Game Theory (27m)
-    { id: "mScpHTIi-kM", durationSeconds: 1639 },
-    // Cartoon: Tom & Jerry 1950s (45m)
-    { id: "SAaUjt0N-tA", durationSeconds: 2705 },
-    // Educational: 3Blue1Brown - Fourier Series (24m)
-    { id: "r6sGWTCMz2k", durationSeconds: 1487 },
-    // Cartoon: Tom & Jerry Vol 30 (35m)
-    { id: "4CU8h5f8TYY", durationSeconds: 2122 },
-    // Palate Cleanser: Tagore's Own Voice (6m)
-    { id: "EMN8_7C3lzc", durationSeconds: 369 },
-
-    // ==========================================
-    // BLOCK 2
-    // ==========================================
-    // Cinema: Charulata (1964) (1h 58m)
-    { id: "hvMSSBSCXns", durationSeconds: 7122 },
-    // Cartoon: Tom & Jerry Vol 29 (43m)
-    { id: "G1nPAY7FQb8", durationSeconds: 2601 },
-    // Educational: Veritasium - LSD & DNA (33m)
-    { id: "zaXKQ70q4KQ", durationSeconds: 2020 },
-    // Cartoon: Tom & Jerry Vol 28 (40m)
-    { id: "u3ElS1Z_7Q4", durationSeconds: 2412 },
-    // Educational: 3Blue1Brown - Neural network (18m)
-    { id: "aircAruvnKk", durationSeconds: 1120 },
-    // Cartoon: Tom & Jerry Vol 27 (35m)
-    { id: "SfAqDL7H3SY", durationSeconds: 2127 },
-
-    // ==========================================
-    // BLOCK 3
-    // ==========================================
-    // Cinema: Apur Sansar (1h 44m)
-    { id: "06SpsEz8v-s", durationSeconds: 6244 },
-    // Cartoon: Tom & Jerry Vol 26 (41m)
-    { id: "CGJdWxSbPe0", durationSeconds: 2464 },
-    // Educational: Veritasium - Skyscraper (33m)
-    { id: "Q56PMJbCFXQ", durationSeconds: 2019 },
-    // Cartoon: Tom & Jerry Vol 25 (40m)
-    { id: "wurbT0lbQ8E", durationSeconds: 2455 },
-    // Educational: 3Blue1Brown - Sphere Area (15m)
-    { id: "GNcFjFmqEc8", durationSeconds: 951 },
-    // Cartoon: Tom & Jerry Vol 24 (42m)
-    { id: "iIL8626KWaA", durationSeconds: 2520 },
-    // Palate Cleanser: Sarojini Naidu 1928 (1m)
-    { id: "BlsZvuNhp4U", durationSeconds: 109 },
-
-    // ==========================================
-    // BLOCK 4
-    // ==========================================
-    // Cinema: Teen Kanya - Samapti (1h 12m)
-    { id: "5MjMK1dgb6E", durationSeconds: 4354 },
-    // Cartoon: Tom & Jerry Vol 22 (47m)
-    { id: "gEr8N_lP5Yg", durationSeconds: 2876 },
-    // Educational: Veritasium - 6 Steps (33m)
-    { id: "CYlon2tvywA", durationSeconds: 1997 },
-    // Cartoon: Tom & Jerry Vol 20 (52m)
-    { id: "Dsh2YhU2NLk", durationSeconds: 3145 },
-    // Educational: 3Blue1Brown - Taylor Series (22m)
-    { id: "3d6DsjIBzJ4", durationSeconds: 1340 },
-    // Educational: 3Blue1Brown - Attention/Transformers (26m)
-    { id: "eMlx5fFNoYc", durationSeconds: 1570 },
-    // Cartoon: Tom & Jerry Vol 21 (57m)
-    { id: "dCFGntdhfdc", durationSeconds: 3463 },
-
-    // ==========================================
-    // BLOCK 5
-    // ==========================================
-    // Documentary: Rabindranath Tagore (51m)
-    { id: "-VsiBNepmp0", durationSeconds: 3085 },
-    // Cartoon: Tom & Jerry Vol 20 (51m)
-    { id: "LNAEv9t5HWI", durationSeconds: 3088 },
-    // Educational: Veritasium - DuPont Poison (54m)
-    { id: "SC2eSujzrUY", durationSeconds: 3248 },
-    // Cartoon: Tom & Jerry Vol 15 (54m)
-    { id: "yop3Ts3bK8o", durationSeconds: 3281 },
-    // Educational: 3Blue1Brown - Wiggling Charges (21m)
-    { id: "aXRTczANuIs", durationSeconds: 1293 },
-    // Cartoon: Tom & Jerry Vol 13 (50m)
-    { id: "1rgtggI3lGs", durationSeconds: 3025 },
-    // Educational: 3Blue1Brown - Brachistochrone (16m)
-    { id: "Cld0p3a43fU", durationSeconds: 962 },
-    // Cartoon: Tom & Jerry Vol 11 (55m)
-    { id: "SCrznOueqcs", durationSeconds: 3308 },
+  schedule: [
+    {
+      start: "01:00",
+      end: "05:00",
+      label: "Lo-fi music",
+      note: "Overnight focus music. If the music rule is later made global, replace this with quiet night ragas.",
+      videos: [
+        { title: "study with me [pomodoro] 3 hours of lofi focus music | Lofi Girl", id: "53gNFOqDFcE", durationSeconds: 10804 },
+        { title: "1 A.M Study Session | Lofi Girl", id: "lTRiuFIWV54", durationSeconds: 3674 },
+        { title: "In the Zone | Chillhop Music", id: "9M4jZuqdw04", durationSeconds: 7235 },
+        { title: "Endless Sunday | Chillhop Music", id: "D_uLM5i0Z4c", durationSeconds: 7288 },
+      ],
+    },
+    {
+      start: "05:00",
+      end: "06:00",
+      label: "Shloka",
+      videos: [
+        { title: "25 Essential Morning Prayers | Strumm Spiritual", id: "SvDIYVvcMIY", durationSeconds: 5249 },
+        { title: "Powerful Vedic Chants | Strumm Spiritual", id: "cDEEMxnZtaE", durationSeconds: 4604 },
+        { title: "Vedic chanting Non Stop", id: "LvKVXNmOqGw", durationSeconds: 3642 },
+        { title: "Top 10 Morning Stotram - M.S. Subbulakshmi", id: "TWMbwsFfnF8", durationSeconds: 5973 },
+      ],
+    },
+    {
+      start: "06:00",
+      end: "08:00",
+      label: "Motivation / Thought-provoking",
+      videos: [
+        { title: "No Fear - Rabindranath Tagore", id: "O2g_5LOGRPg", durationSeconds: 95 },
+        { title: "The Man in the Arena - Teddy Roosevelt", id: "A311CnTjfos", durationSeconds: 169 },
+        { title: "RAGE - Motivational Video", id: "w1JJ5actiUM", durationSeconds: 186 },
+        { title: "Invincible - Motivational Video", id: "zIFVwF35Jb0", durationSeconds: 232 },
+        { title: "Seneca: LIFE CHANGING Quotes", id: "GTge3vVwvOk", durationSeconds: 272 },
+        { title: "BE UNSHAKEABLE - Stoic Quote Collection", id: "VCzK1x39iQM", durationSeconds: 771 },
+        { title: "COURAGE - Motivational Speech", id: "XcAehvwamzY", durationSeconds: 266 },
+        { title: "Aristotle - Life Changing Quotes", id: "3xBXGbvSeNw", durationSeconds: 234 },
+        { title: "Greatest Warrior Quotes: Live With Valor", id: "Wyx-l1UWWtg", durationSeconds: 261 },
+        { title: "Lao Tzu Life Changing Quotes", id: "yERHSEP_zBM", durationSeconds: 261 },
+        { title: "Do schools kill creativity? | Sir Ken Robinson | TED", id: "iG9CE55wbtY", durationSeconds: 1203 },
+        { title: "The puzzle of motivation | Dan Pink | TED", id: "rrkrvAUbU9Y", durationSeconds: 1117 },
+        { title: "The surprising habits of original thinkers | Adam Grant | TED", id: "fxbCHn6gE3U", durationSeconds: 925 },
+        { title: "The Danger of a Single Story | Chimamanda Ngozi Adichie | TED", id: "D9Ihs241zeg", durationSeconds: 1156 },
+        { title: "Inside the Mind of a Master Procrastinator | Tim Urban | TED", id: "arj7oStGLkU", durationSeconds: 844 },
+        { title: "What really matters at the end of life | BJ Miller | TED", id: "apbSsILLh28", durationSeconds: 1148 },
+        { title: "The surprising science of happiness | Dan Gilbert | TED", id: "4q1dgn_C0AU", durationSeconds: 1280 },
+      ],
+    },
+    {
+      start: "08:00",
+      end: "10:00",
+      label: "BBC Earth / Travel",
+      videos: [
+        { title: "A Journey Across Our Planet | Planet Earth II | BBC Earth", id: "bj2t7yGA_0M", durationSeconds: 2580 },
+        { title: "Planet Earth Through The Seasons | BBC Earth", id: "tVQ5H4RNirk", durationSeconds: 2152 },
+        { title: "A Journey Across Africa | BBC Earth", id: "3-QqmQ_MIe4", durationSeconds: 2983 },
+        { title: "An Adventure Through Africa in 4K | BBC Earth", id: "o50N3-OaGdM", durationSeconds: 3538 },
+        { title: "Prague | Rick Steves' Europe", id: "BFKzX7u-3yg", durationSeconds: 1504 },
+        { title: "Rick Steves Iceland", id: "7glld8yO3Xo", durationSeconds: 3379 },
+      ],
+    },
+    {
+      start: "10:00",
+      end: "12:00",
+      label: "Cartoon",
+      videos: [
+        { title: "Tom and Jerry Vol. 31 | Warner Classics", id: "mkPLXTXY2WY", durationSeconds: 2453 },
+        { title: "Tom and Jerry 1950s Mega Episode | Warner Classics", id: "SAaUjt0N-tA", durationSeconds: 2705 },
+        { title: "Tom and Jerry Vol. 30 | Warner Classics", id: "4CU8h5f8TYY", durationSeconds: 2122 },
+        { title: "Tom and Jerry Vol. 29 | Warner Classics", id: "G1nPAY7FQb8", durationSeconds: 2601 },
+        { title: "Tom and Jerry Vol. 28 | Warner Classics", id: "u3ElS1Z_7Q4", durationSeconds: 2412 },
+        { title: "Tom and Jerry Vol. 27 | Warner Classics", id: "SfAqDL7H3SY", durationSeconds: 2127 },
+        { title: "Tom and Jerry Vol. 26 | Warner Classics", id: "CGJdWxSbPe0", durationSeconds: 2464 },
+        { title: "Tom and Jerry Vol. 25 | Warner Classics", id: "wurbT0lbQ8E", durationSeconds: 2455 },
+        { title: "Tom and Jerry Vol. 24 | Warner Classics", id: "iIL8626KWaA", durationSeconds: 2520 },
+        { title: "Tom and Jerry Vol. 22 | Warner Classics", id: "gEr8N_lP5Yg", durationSeconds: 2876 },
+        { title: "Tom and Jerry Vol. 20 | Warner Classics", id: "Dsh2YhU2NLk", durationSeconds: 3145 },
+        { title: "Tom and Jerry Vol. 21 | Warner Classics", id: "dCFGntdhfdc", durationSeconds: 3463 },
+        { title: "Tom and Jerry Vol. 20 | Warner Classics", id: "LNAEv9t5HWI", durationSeconds: 3088 },
+        { title: "Tom and Jerry Vol. 15 | Warner Classics", id: "yop3Ts3bK8o", durationSeconds: 3281 },
+        { title: "Tom and Jerry Vol. 13 | Warner Classics", id: "1rgtggI3lGs", durationSeconds: 3025 },
+        { title: "Tom and Jerry Vol. 11 | Warner Classics", id: "SCrznOueqcs", durationSeconds: 3308 },
+        { title: "Tom and Jerry | Quiet Please! | Warner Classics", id: "Gkysb_8N9os", durationSeconds: 458 },
+        { title: "Popeye: Big Bad Sinbad", id: "-x_n-XaqKu4", durationSeconds: 303 },
+        { title: "Superman: Electric Earthquake", id: "EZosvpToVp8", durationSeconds: 523 },
+        { title: "Looney Tunes - 3 Hours of Cartoon Chaos", id: "C9yE5VsdsrY", durationSeconds: 11103 },
+      ],
+    },
+    {
+      start: "12:00",
+      end: "15:00",
+      label: "Bengali classic movie / drama",
+      note: "Old Bengali films and drama-style cinema, pre-1960 where possible; Satyajit Ray is the exception.",
+      videos: [
+        { title: "Teen Kanya - Samapti | Satyajit Ray", id: "5MjMK1dgb6E", durationSeconds: 4354 },
+        { title: "Charulata | Satyajit Ray", id: "hvMSSBSCXns", durationSeconds: 7122 },
+        { title: "Apur Sansar | Satyajit Ray", id: "06SpsEz8v-s", durationSeconds: 6244 },
+        { title: "Devi | Satyajit Ray", id: "sHk0sw1SHkk", durationSeconds: 6312 },
+        { title: "Pather Panchali | Satyajit Ray", id: "f2B7dpPFuiY", durationSeconds: 7386 },
+        { title: "Aparajito | Satyajit Ray", id: "scgyxNLiAL8", durationSeconds: 6013 },
+        { title: "Jalsaghar | Satyajit Ray", id: "R68McAH9Jc4", durationSeconds: 4568 },
+        { title: "Sare Chuattar | Bengali film, 1953", id: "eIJICFUIjk4", durationSeconds: 6234 },
+        { title: "Agni Pariksha | Bengali film, 1954", id: "wdFSfrrXFMc", durationSeconds: 8160 },
+        { title: "Harano Sur | Bengali film, 1957", id: "FEsMLRFpGqw", durationSeconds: 8798 },
+        { title: "Chaoa Paoa | Bengali film, 1959", id: "rk_8npSCDx4", durationSeconds: 7288 },
+        { title: "Mukti | Bengali film, 1937", id: "zg4SlOohYsQ", durationSeconds: 6956 },
+        { title: "Udayer Pathey | Bengali social drama, 1944", id: "krc5RUnt2Pw", durationSeconds: 6453 },
+        { title: "Vidyasagar | Bengali biographical film, 1950", id: "yPBcedarsGU", durationSeconds: 7606 },
+        { title: "Michael Madhusudan | Bengali biographical film, 1950", id: "3aygZ5wYMKg", durationSeconds: 7605 },
+      ],
+    },
+    {
+      start: "15:00",
+      end: "18:00",
+      label: "Science",
+      videos: [
+        { title: "This game theory problem will change the way you see the world", id: "mScpHTIi-kM", durationSeconds: 1639 },
+        { title: "The Man Who Took LSD and Changed The World", id: "zaXKQ70q4KQ", durationSeconds: 2020 },
+        { title: "How One Company Secretly Poisoned The Planet", id: "SC2eSujzrUY", durationSeconds: 3248 },
+        { title: "How a Student's Question Saved This NYC Skyscraper", id: "Q56PMJbCFXQ", durationSeconds: 2019 },
+        { title: "Can you really reach anyone in 6 steps?", id: "CYlon2tvywA", durationSeconds: 1997 },
+        { title: "But what is a Fourier series?", id: "r6sGWTCMz2k", durationSeconds: 1487 },
+        { title: "But what is a neural network?", id: "aircAruvnKk", durationSeconds: 1120 },
+        { title: "Why is a sphere's surface area four times its shadow?", id: "GNcFjFmqEc8", durationSeconds: 951 },
+        { title: "Taylor series", id: "3d6DsjIBzJ4", durationSeconds: 1340 },
+        { title: "Attention in transformers, step-by-step", id: "eMlx5fFNoYc", durationSeconds: 1570 },
+        { title: "How wiggling charges give rise to light", id: "aXRTczANuIs", durationSeconds: 1293 },
+        { title: "The Brachistochrone, with Steven Strogatz", id: "Cld0p3a43fU", durationSeconds: 962 },
+        { title: "What They Probably Don't Teach You About Rainbows At School", id: "24GfgNtnjXc", durationSeconds: 1631 },
+        { title: "Chaos: The Science of the Butterfly Effect | Veritasium", id: "fDek6cYijxI", durationSeconds: 771 },
+        { title: "The Most Misunderstood Concept in Physics | Veritasium", id: "DxL2HoqLbyA", durationSeconds: 1635 },
+        { title: "Terence Tao on the cosmic distance ladder | 3Blue1Brown", id: "YdOXS_9_P4U", durationSeconds: 1713 },
+        { title: "The magic of Fibonacci numbers | Arthur Benjamin | TED", id: "SjSHVDfXHQ4", durationSeconds: 385 },
+      ],
+    },
+    {
+      start: "18:00",
+      end: "21:00",
+      label: "Bengali classics / Hindustani classical",
+      note: "Only pre-1960 Bengali classic song traditions and North Indian classical music.",
+      videos: [
+        { title: "Raag Yaman - Ustad Amir Khan", id: "toJnqAL_nZs", durationSeconds: 3284 },
+        { title: "Bade Ghulam Ali Khan - Bhup - Tarana - 1954", id: "9NFgrneJHGY", durationSeconds: 626 },
+        { title: "Bade Ghulam Ali Khan - Raag Manj Khamaj - 1949", id: "sUAhqXdPCoo", durationSeconds: 205 },
+        { title: "Mishra Brothers Rajan & Sajan - Miya Ki Malhar", id: "ySaUOxo1esU", durationSeconds: 4511 },
+        { title: "Aykdin Chine Nebe Taare - Kanan Debi, 1945", id: "bWr_hoSEczw", durationSeconds: 183 },
+        { title: "Nayan Je Mor Baran Mane Na - Angurbala, 1932", id: "cr1QKmrDrWM", durationSeconds: 199 },
+        { title: "Mor Ghumoghore Ele Manohar - Indubala, 1931", id: "n6Tp5W4HvI8", durationSeconds: 213 },
+        { title: "Amar Chokh Bnedhe Bhober Khelay - Renuka Sengupta, 1932", id: "b6Y4MnZHMKE", durationSeconds: 176 },
+        { title: "Gagana Bhusan Tumi - Dilip Kumar Roy, 1937", id: "n-kweVzyymY", durationSeconds: 199 },
+        { title: "Dhono Dhanye Puspe Bhora - Dilip Kumar Roy, 12-inch 78 rpm", id: "2LhrNwyvVUY", durationSeconds: 240 },
+        { title: "Ustad Amir Khan - early 78 rpm record, 1934", id: "7qWUCt2kpo4", durationSeconds: 198 },
+        { title: "Ustad Amir Khan - Hamsadhwani, 1955", id: "MROu8xiG5Eo", durationSeconds: 741 },
+        { title: "Ustad Bade Ghulam Ali Khan - Raga Desi & Bhairavi, early 1950s", id: "EXeXnKiKg78", durationSeconds: 2742 },
+        { title: "Ustad Bade Ghulam Ali Khan - Bhairavi & Kafi, live 1956", id: "KuvQ8VhvuWA", durationSeconds: 1750 },
+        { title: "Kesarbai Kerkar - Durga, 78 rpm 1936", id: "oiDKUR7GZA4", durationSeconds: 582 },
+        { title: "Kesarbai Kerkar - Desh, 78 rpm 1936", id: "eZJL6cNIdd8", durationSeconds: 434 },
+        { title: "Abdul Karim Khan - Bhairavi, shellac 78 rpm 1934", id: "vjCCLtclCP0", durationSeconds: 503 },
+        { title: "Abdul Karim Khan - Patdeep, vintage 78 rpm 1936", id: "Xxe07zMbIpI", durationSeconds: 247 },
+      ],
+    },
+    {
+      start: "21:00",
+      end: "22:00",
+      label: "Health / Finance",
+      videos: [
+        { title: "The Dark Reality of World's Fattest Country", id: "kk8Z4XIT4Qs", durationSeconds: 1332 },
+        { title: "What is Communism?", id: "4UJM4RFQjpU", durationSeconds: 1197 },
+        { title: "What is Capitalism?", id: "Cf4uQg03jYg", durationSeconds: 1005 },
+        { title: "Sleep Is Your Superpower | Matt Walker | TED", id: "5MuIMqhT8DM", durationSeconds: 1158 },
+        { title: "Why Social Health Is Key to Happiness and Longevity | TED", id: "LpSDuDIaBGk", durationSeconds: 576 },
+        { title: "The Fundamentals: Why is Investing Important? | The Plain Bagel", id: "I81xqr8HzBE", durationSeconds: 545 },
+        { title: "The Difference Between Trading and Investing | The Plain Bagel", id: "dmqoqVwFopE", durationSeconds: 629 },
+        { title: "Bonds vs. stocks | Khan Academy", id: "rs1md3e4aYU", durationSeconds: 561 },
+      ],
+    },
+    {
+      start: "22:00",
+      end: "23:00",
+      label: "Short film",
+      videos: [
+        { title: "Out Full SparkShort | Pixar", id: "OkLZN0ziLuI", durationSeconds: 633 },
+        { title: "AFTER THE RAIN | Omeleto", id: "qEaoaRpRRzo", durationSeconds: 535 },
+        { title: "1500 WORDS | Omeleto", id: "-waMtGtxAdg", durationSeconds: 526 },
+        { title: "LOST AND FOUND | Omeleto", id: "VBps1IvCyj0", durationSeconds: 450 },
+        { title: "EXIT STRATEGY | Omeleto", id: "68f27rqP_NY", durationSeconds: 909 },
+      ],
+    },
+    {
+      start: "23:00",
+      end: "01:00",
+      label: "Historical biography / speeches / audiobooks",
+      videos: [
+        { title: "Rabindranath Tagore - A Film by Satyajit Ray", id: "-VsiBNepmp0", durationSeconds: 3085 },
+        { title: "Rabindranath Tagore's Own Voice & Video Footage", id: "EMN8_7C3lzc", durationSeconds: 369 },
+        { title: "Sarojini Naidu Greeting Americans In 1928", id: "BlsZvuNhp4U", durationSeconds: 109 },
+        { title: "Raja Ram Mohan Roy - The First Indian Liberal", id: "5HTK6XnX-ns", durationSeconds: 946 },
+        { title: "How Hitler Brainwashed Millions of People", id: "laisVDBJ204", durationSeconds: 959 },
+        { title: "Swami Vivekananda - How Naren became a Monk", id: "PA80BSo8XQQ", durationSeconds: 951 },
+        { title: "Rabindranath Tagore - How a School Drop-Out Won the Nobel Prize", id: "HnpMTINOBHo", durationSeconds: 740 },
+        { title: "Gandhi in 5 Minutes | British Pathe", id: "codWemzsW40", durationSeconds: 279 },
+        { title: "The vision and philosophy of Gandhi | Prasar Bharati Archives", id: "0Etsy3LPddU", durationSeconds: 1713 },
+        { title: "1963 - A Talk on Swami Vivekananda | Prasar Bharati Archives", id: "2indUgqt-KU", durationSeconds: 796 },
+        { title: "Autobiography of a Yogi, Part 1/3 | LibriVox", id: "hbWzFlszaKM", durationSeconds: 25473 },
+      ],
+    },
   ],
 };

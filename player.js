@@ -7,85 +7,202 @@
   const playButton = document.getElementById("play-button");
   const playLabel = document.getElementById("play-label");
   const playIcon = document.getElementById("play-icon");
+  const slotLabel = document.getElementById("slot-label");
+  const programNote = document.getElementById("program-note");
 
-  document.querySelectorAll("[data-channel-name]").forEach((node) => { node.textContent = config.channelName; });
+  document.querySelectorAll("[data-channel-name]").forEach((node) => {
+    node.textContent = config.channelName;
+  });
   document.title = config.channelName;
 
-  let player;
-  let currentIndex = -1;
-  let isPlaying = false;
-  
-  // This tracks whether the channel has been turned on yet
-  let firstStart = true; 
+  const SECONDS_PER_DAY = 24 * 60 * 60;
+  const offsetMinutes = Number.isFinite(config.timeZoneOffsetMinutes)
+    ? config.timeZoneOffsetMinutes
+    : 330;
 
-  function positionAt(now = Date.now()) {
-    const total = config.videos.reduce((sum, video) => sum + video.durationSeconds, 0);
-    if (!total) throw new Error("Add at least one video to config.");
-    let cursor = Math.max(0, Math.floor((now - Date.parse(config.epoch)) / 1000)) % total;
-    for (let index = 0; index < config.videos.length; index += 1) {
-      if (cursor < config.videos[index].durationSeconds) return { index, offset: cursor };
-      cursor -= config.videos[index].durationSeconds;
+  let player;
+  let currentSlotIndex = -1;
+  let currentVideoIndex = -1;
+  let currentVideoId = "";
+  let currentSlotLabel = "";
+  let isPlaying = false;
+  let firstStart = true;
+  const failedVideoIds = new Set();
+
+  function parseClockTime(value) {
+    const [hours, minutes] = value.split(":").map((part) => Number.parseInt(part, 10));
+    return (hours * 60 * 60) + (minutes * 60);
+  }
+
+  function configuredDateParts(now = Date.now()) {
+    const shifted = new Date(now + (offsetMinutes * 60 * 1000));
+    return {
+      year: shifted.getUTCFullYear(),
+      month: shifted.getUTCMonth() + 1,
+      day: shifted.getUTCDate(),
+      seconds: (shifted.getUTCHours() * 60 * 60)
+        + (shifted.getUTCMinutes() * 60)
+        + shifted.getUTCSeconds(),
+    };
+  }
+
+  function secondsInConfiguredDay(now = Date.now()) {
+    return configuredDateParts(now).seconds;
+  }
+
+  function scheduleFor(now = Date.now()) {
+    const fallback = config.schedule || [];
+    if (!config.dailySchedules || !config.monthSchedule) return fallback;
+
+    const parts = configuredDateParts(now);
+    const isoDate = `${parts.year}-${String(parts.month).padStart(2, "0")}-${String(parts.day).padStart(2, "0")}`;
+    const day = String(parts.day);
+    const scheduleName = config.monthSchedule[isoDate]
+      || config.monthSchedule[day]
+      || config.monthSchedule.default;
+
+    return config.dailySchedules[scheduleName] || fallback;
+  }
+
+  function slotContains(seconds, start, end) {
+    if (start === end) return true;
+    if (start < end) return seconds >= start && seconds < end;
+    return seconds >= start || seconds < end;
+  }
+
+  function elapsedInSlot(seconds, start, end) {
+    if (start === end) return seconds;
+    if (start < end) return seconds - start;
+    return seconds >= start ? seconds - start : (SECONDS_PER_DAY - start) + seconds;
+  }
+
+  function videoDuration(video) {
+    return Math.max(0, Number(video.durationSeconds) || 0);
+  }
+
+  function activeSlotVideos(slot, excludedIds = failedVideoIds) {
+    return slot.videos
+      .map((video, index) => ({ video, index }))
+      .filter(({ video }) => videoDuration(video) > 0 && !excludedIds.has(video.id));
+  }
+
+  function slotVideoTotal(items) {
+    return items.reduce((sum, item) => sum + videoDuration(item.video), 0);
+  }
+
+  function positionAt(now = Date.now(), excludedIds = failedVideoIds) {
+    const schedule = scheduleFor(now);
+    if (!schedule.length) throw new Error("Add at least one schedule slot to config.");
+
+    const seconds = secondsInConfiguredDay(now);
+
+    for (let slotIndex = 0; slotIndex < schedule.length; slotIndex += 1) {
+      const slot = schedule[slotIndex];
+      const start = parseClockTime(slot.start);
+      const end = parseClockTime(slot.end);
+
+      if (!slotContains(seconds, start, end)) continue;
+
+      const activeVideos = activeSlotVideos(slot, excludedIds);
+      const total = slotVideoTotal(activeVideos);
+      if (!total) throw new Error(`Add at least one video to the ${slot.label} slot.`);
+
+      let cursor = elapsedInSlot(seconds, start, end) % total;
+
+      for (let index = 0; index < activeVideos.length; index += 1) {
+        const item = activeVideos[index];
+        const video = item.video;
+        const duration = videoDuration(video);
+        if (cursor < duration) {
+          return {
+            slot,
+            slotIndex,
+            index: item.index,
+            video,
+            offset: cursor,
+          };
+        }
+        cursor -= duration;
+      }
     }
-    return { index: 0, offset: 0 };
+
+    throw new Error("The current time is not covered by the channel schedule.");
+  }
+
+  function renderProgram(position) {
+    if (!position) return;
+    currentSlotLabel = position.slot.label || "Current program";
+    if (slotLabel) slotLabel.textContent = currentSlotLabel;
+    if (programNote) programNote.textContent = position.video.title || "You are watching the current program.";
   }
 
   function updateControls(playing) {
     isPlaying = playing;
-    
-    // SEQUENCE 1: Before the channel is turned on
+
     if (firstStart && !playing) {
       playLabel.textContent = "Turn on channel";
       playIcon.textContent = "▶";
       stateText.textContent = "Channel ready";
-    } 
-    // SEQUENCE 2: After it's turned on (Standard Play/Pause)
-    else {
+    } else {
       playLabel.textContent = playing ? "Pause" : "Play";
       playIcon.textContent = playing ? "Ⅱ" : "▶";
-      stateText.textContent = playing ? "On air" : "Paused";
+      stateText.textContent = playing
+        ? `On air - ${currentSlotLabel || "Current program"}`
+        : "Paused";
     }
-    
+
     playButton.setAttribute("aria-label", playing ? "Pause channel" : "Play channel");
   }
 
   function tuneToNow(autoplay) {
     if (!player) return;
-    const { index, offset } = positionAt();
-    const videoId = config.videos[index].id;
-    if (currentIndex !== index) {
-      currentIndex = index;
+
+    const position = positionAt();
+    const videoId = position.video.id;
+    renderProgram(position);
+
+    if (currentSlotIndex !== position.slotIndex || currentVideoIndex !== position.index) {
+      currentSlotIndex = position.slotIndex;
+      currentVideoIndex = position.index;
+      currentVideoId = videoId;
       const command = autoplay ? "loadVideoById" : "cueVideoById";
-      player[command]({ videoId, startSeconds: offset });
-    } else {
-      if (Math.abs(player.getCurrentTime() - offset) > 4) player.seekTo(offset, true);
-      if (autoplay) player.playVideo();
+      player[command]({ videoId, startSeconds: position.offset });
+      return;
     }
+
+    currentVideoId = videoId;
+    if (Math.abs(player.getCurrentTime() - position.offset) > 4) {
+      player.seekTo(position.offset, true);
+    }
+    if (autoplay) player.playVideo();
   }
 
   function togglePlayback() {
     if (!player) return;
-    
-    // SEQUENCE 1: The very first click
+
     if (firstStart) {
-      firstStart = false; // Turn off the "Turn on" state permanently
-      playLabel.textContent = "Tuning in..."; // Temporary loading text
+      firstStart = false;
+      playLabel.textContent = "Tuning in...";
       tuneToNow(true);
-    } 
-    // SEQUENCE 2: All subsequent clicks (Play/Pause)
-    else {
-      if (isPlaying) {
-        player.pauseVideo();
-      } else {
-        tuneToNow(true);
-      }
+      return;
+    }
+
+    if (isPlaying) {
+      player.pauseVideo();
+    } else {
+      tuneToNow(true);
     }
   }
 
   window.onYouTubeIframeAPIReady = () => {
     const initial = positionAt();
-    currentIndex = initial.index;
+    currentSlotIndex = initial.slotIndex;
+    currentVideoIndex = initial.index;
+    currentSlotLabel = initial.slot.label;
+    renderProgram(initial);
+
     player = new YT.Player("youtube-player", {
-      videoId: config.videos[initial.index].id,
+      videoId: initial.video.id,
       playerVars: {
         autoplay: 0,
         controls: 0,
@@ -100,21 +217,36 @@
       events: {
         onReady: () => {
           playButton.disabled = false;
-          // Initializes the UI with the "Turn on channel" state
-          updateControls(false); 
+          tuneToNow(false);
+          updateControls(false);
         },
         onStateChange: (event) => {
           if (event.data === YT.PlayerState.PLAYING) updateControls(true);
           if (event.data === YT.PlayerState.PAUSED) updateControls(false);
           if (event.data === YT.PlayerState.ENDED) tuneToNow(true);
         },
-        onError: () => { stateText.textContent = "This program cannot be embedded"; },
+        onError: () => {
+          if (currentVideoId) failedVideoIds.add(currentVideoId);
+          stateText.textContent = "Skipping unavailable program";
+          try {
+            tuneToNow(!firstStart);
+          } catch (error) {
+            stateText.textContent = "No embeddable program in this slot";
+          }
+        },
       },
     });
   };
 
   playButton.addEventListener("click", togglePlayback);
-  setInterval(() => { if (isPlaying) tuneToNow(true); }, 5000);
+  setInterval(() => {
+    if (!player) return;
+    if (isPlaying) {
+      tuneToNow(true);
+    } else {
+      renderProgram(positionAt());
+    }
+  }, 5000);
 
   const api = document.createElement("script");
   api.src = "https://www.youtube.com/iframe_api";
