@@ -191,6 +191,11 @@ window.CHANNEL_CONFIG = {
         { title: "1500 WORDS | Omeleto", id: "-waMtGtxAdg", durationSeconds: 526 },
         { title: "LOST AND FOUND | Omeleto", id: "VBps1IvCyj0", durationSeconds: 450 },
         { title: "EXIT STRATEGY | Omeleto", id: "68f27rqP_NY", durationSeconds: 909 },
+        { title: "Panthar Mangsho | Ullas Mallick | Mirchi Bangla Audio Story", id: "w9esPNhfPhc", durationSeconds: 2174 },
+        { title: "Inhaler | Koustav Samanta | Mirchi Bangla Audio Story", id: "J6MI6QknKGo", durationSeconds: 2012 },
+        { title: "Satyajit Ray | Golpokothon by Kollol", id: "zMmaqJERNTY", durationSeconds: 2631 },
+        { title: "The New Catacomb | Sir Arthur Conan Doyle | Radio Milan Audio Story", id: "PeIeBt_4IJI", durationSeconds: 1939 },
+        { title: "Otithi | Rabindranath Tagore | Radio Milan Audio Story", id: "4VFp3jZk-XM", durationSeconds: 3344 },
       ],
     },
     {

@@ -232,7 +232,17 @@ footer {
   width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
   padding: 15px 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
   border-top: 1px solid rgba(244, 234, 213, .11);
+}
+
+.visitor-counter {
+  height: 20px;
+  max-width: 100%;
+  opacity: .72;
 }
 
 @media (max-width: 640px) {
@@ -263,5 +273,7 @@ footer {
   }
   footer {
     width: calc(100% - 28px);
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
