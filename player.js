@@ -30,8 +30,10 @@
   const failedVideoIds = new Set();
 
   function parseClockTime(value) {
-    const [hours, minutes] = value.split(":").map((part) => Number.parseInt(part, 10));
-    return (hours * 60 * 60) + (minutes * 60);
+    const [hours = 0, minutes = 0, seconds = 0] = value
+      .split(":")
+      .map((part) => Number.parseInt(part, 10));
+    return (hours * 60 * 60) + (minutes * 60) + seconds;
   }
 
   function configuredDateParts(now = Date.now()) {
@@ -88,6 +90,12 @@
 
   function slotVideoTotal(items) {
     return items.reduce((sum, item) => sum + videoDuration(item.video), 0);
+  }
+
+  function currentProgramCanYield() {
+    const schedule = scheduleFor();
+    const slot = schedule[currentSlotIndex];
+    return Boolean(slot && slot.buffer);
   }
 
   function positionAt(now = Date.now(), excludedIds = failedVideoIds) {
@@ -154,11 +162,12 @@
     playButton.setAttribute("aria-label", playing ? "Pause channel" : "Play channel");
   }
 
-  function tuneToNow(autoplay) {
+  function tuneToNow(autoplay, startAtBeginning = false) {
     if (!player) return;
 
     const position = positionAt();
     const videoId = position.video.id;
+    const startSeconds = startAtBeginning ? 0 : position.offset;
     renderProgram(position);
 
     if (currentSlotIndex !== position.slotIndex || currentVideoIndex !== position.index) {
@@ -166,15 +175,24 @@
       currentVideoIndex = position.index;
       currentVideoId = videoId;
       const command = autoplay ? "loadVideoById" : "cueVideoById";
-      player[command]({ videoId, startSeconds: position.offset });
+      player[command]({ videoId, startSeconds });
       return;
     }
 
     currentVideoId = videoId;
-    if (Math.abs(player.getCurrentTime() - position.offset) > 4) {
+    if (startAtBeginning) {
+      player.seekTo(0, true);
+    } else if (Math.abs(player.getCurrentTime() - position.offset) > 4) {
       player.seekTo(position.offset, true);
     }
     if (autoplay) player.playVideo();
+  }
+
+  function tuneAfterVideoEnds() {
+    const position = positionAt();
+    const programChanged = currentSlotIndex !== position.slotIndex
+      || currentVideoIndex !== position.index;
+    tuneToNow(true, programChanged);
   }
 
   function togglePlayback() {
@@ -223,7 +241,7 @@
         onStateChange: (event) => {
           if (event.data === YT.PlayerState.PLAYING) updateControls(true);
           if (event.data === YT.PlayerState.PAUSED) updateControls(false);
-          if (event.data === YT.PlayerState.ENDED) tuneToNow(true);
+          if (event.data === YT.PlayerState.ENDED) tuneAfterVideoEnds();
         },
         onError: () => {
           if (currentVideoId) failedVideoIds.add(currentVideoId);
@@ -242,7 +260,10 @@
   setInterval(() => {
     if (!player) return;
     if (isPlaying) {
-      tuneToNow(true);
+      const position = positionAt();
+      const programChanged = currentSlotIndex !== position.slotIndex
+        || currentVideoIndex !== position.index;
+      if (programChanged && currentProgramCanYield()) tuneToNow(true, true);
     } else {
       renderProgram(positionAt());
     }

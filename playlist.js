@@ -8,9 +8,10 @@ window.CHANNEL_CONFIG = {
   schedule: [
     {
       start: "01:00",
-      end: "05:00",
+      end: "02:50:41",
       label: "Lo-fi music",
-      note: "Overnight focus music. If the music rule is later made global, replace this with quiet night ragas.",
+      buffer: true,
+      note: "Overnight focus music. This is the flexible buffer block when another program needs a little extra time.",
       videos: [
         { title: "study with me [pomodoro] 3 hours of lofi focus music | Lofi Girl", id: "53gNFOqDFcE", durationSeconds: 10804 },
         { title: "1 A.M Study Session | Lofi Girl", id: "lTRiuFIWV54", durationSeconds: 3674 },
@@ -19,14 +20,16 @@ window.CHANNEL_CONFIG = {
       ],
     },
     {
-      start: "05:00",
+      start: "02:50:41",
       end: "06:00",
-      label: "Shloka",
+      label: "Buddhist chants / morning meditation",
+      note: "Buddhist morning chants followed by the curator's requested closing meditation sequence.",
       videos: [
-        { title: "25 Essential Morning Prayers | Strumm Spiritual", id: "SvDIYVvcMIY", durationSeconds: 5249 },
-        { title: "Powerful Vedic Chants | Strumm Spiritual", id: "cDEEMxnZtaE", durationSeconds: 4604 },
-        { title: "Vedic chanting Non Stop", id: "LvKVXNmOqGw", durationSeconds: 3642 },
-        { title: "Top 10 Morning Stotram - M.S. Subbulakshmi", id: "TWMbwsFfnF8", durationSeconds: 5973 },
+        { title: "Mantra of Avalokiteshvara - Full Length Version", id: "8DDc1UJqMWM", durationSeconds: 1435 },
+        { title: "Greatest Buddha Music of All Time - Dharani and Buddhist Mantras", id: "ABy95341Dto", durationSeconds: 7310 },
+        { title: "Sri Venkatesha Stotram - Invoking the Lord's Mercy", id: "_yhBlE3D9cc", durationSeconds: 330 },
+        { title: "Vedic Chanting - Manish Vyas", id: "GePN4-Cajvk", durationSeconds: 275 },
+        { title: "Guided Meditation - Manifest Your Dreams", id: "1VHmIdeoOmE", durationSeconds: 2009 },
       ],
     },
     {

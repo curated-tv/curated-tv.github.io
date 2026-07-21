@@ -10,8 +10,8 @@ All times are in `Asia/Kolkata`.
 
 | Time | Slot |
 |---:|---|
-| 01:00-05:00 | Lo-fi music |
-| 05:00-06:00 | Shloka |
+| 01:00-02:50:41 | Lo-fi music buffer |
+| 02:50:41-06:00 | Buddhist chants / morning meditation |
 | 06:00-08:00 | Motivation / thought-provoking |
 | 08:00-10:00 | BBC Earth / travel |
 | 10:00-12:00 | Cartoon |
@@ -43,7 +43,7 @@ Open `playlist.js` and add the video to the correct schedule slot:
 
 The video ID is the part after `v=` in a YouTube URL. Enter the full duration of each video in seconds.
 
-Videos inside each slot loop until the next slot begins. If a slot has more content than its clock window, the site simply cuts to the next scheduled slot at the boundary.
+Videos normally finish before the player moves to the next scheduled programme. The lo-fi block is marked as the flexible buffer, so it may yield when another programme needs to start on time.
 
 The player also has a future-ready hook for month-specific schedules. For now, `playlist.js` uses one daily schedule. Later, we can add `dailySchedules` and `monthSchedule` in `playlist.js` without changing the player again.
 
