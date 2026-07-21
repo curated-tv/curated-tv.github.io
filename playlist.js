@@ -1,9 +1,8 @@
 // Edit this file to change the channel schedule.
-// Times are in IST (Asia/Kolkata). Videos inside each slot loop until the next slot begins.
+// Times follow each viewer's local browser clock.
+// Videos inside each slot loop until the next slot begins.
 window.CHANNEL_CONFIG = {
   channelName: "Curated Time TV",
-  timeZone: "Asia/Kolkata",
-  timeZoneOffsetMinutes: 330,
 
   schedule: [
     {

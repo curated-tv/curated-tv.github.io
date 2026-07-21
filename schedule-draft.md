@@ -363,8 +363,9 @@ schedule: [
 
 The player should:
 
-1. Find the current IST slot.
+1. Find the current slot using the viewer's own local browser clock.
 2. Calculate elapsed seconds inside that slot.
-3. Loop only through that slot's videos.
-4. Retune when a slot changes.
-5. Support a future `monthSchedule`, where each calendar day points to a different set of blocks.
+3. Loop only through that slot's videos, rotating the starting order by the viewer's local calendar day.
+4. Let every non-buffer video finish once it has started.
+5. Use only the lo-fi buffer block for clean retuning when a slot boundary arrives mid-video.
+6. Support a future `monthSchedule`, where each local calendar day points to a different set of blocks.

@@ -2,11 +2,11 @@
 
 A static, television-style YouTube channel for GitHub Pages.
 
-The channel now follows a fixed daily IST schedule. Every visitor joins the same current programme for the current time slot.
+The channel now follows each viewer's local daily schedule. A visitor sees the morning block in their own morning, the movie block at their own noon, and the music block in their own evening.
 
 ## Daily schedule
 
-All times are in `Asia/Kolkata`.
+All times follow the viewer's local browser clock; there is no single fixed timezone for everyone.
 
 | Time | Slot |
 |---:|---|
@@ -45,7 +45,7 @@ The video ID is the part after `v=` in a YouTube URL. Enter the full duration of
 
 Videos normally finish before the player moves to the next scheduled programme. The lo-fi block is marked as the flexible buffer, so it may yield when another programme needs to start on time.
 
-The player also has a future-ready hook for month-specific schedules. For now, `playlist.js` uses one daily schedule. Later, we can add `dailySchedules` and `monthSchedule` in `playlist.js` without changing the player again.
+The player rotates each slot's video order by the viewer's local calendar day, so each day starts from a different item. It also has a future-ready hook for month-specific schedules. For now, `playlist.js` uses one daily schedule.
 
 ## Publish with GitHub Pages
 

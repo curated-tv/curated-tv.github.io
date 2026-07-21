@@ -16,9 +16,7 @@
   document.title = config.channelName;
 
   const SECONDS_PER_DAY = 24 * 60 * 60;
-  const offsetMinutes = Number.isFinite(config.timeZoneOffsetMinutes)
-    ? config.timeZoneOffsetMinutes
-    : 330;
+  const MILLISECONDS_PER_DAY = SECONDS_PER_DAY * 1000;
 
   let player;
   let currentSlotIndex = -1;
@@ -37,19 +35,24 @@
   }
 
   function configuredDateParts(now = Date.now()) {
-    const shifted = new Date(now + (offsetMinutes * 60 * 1000));
+    const local = new Date(now);
     return {
-      year: shifted.getUTCFullYear(),
-      month: shifted.getUTCMonth() + 1,
-      day: shifted.getUTCDate(),
-      seconds: (shifted.getUTCHours() * 60 * 60)
-        + (shifted.getUTCMinutes() * 60)
-        + shifted.getUTCSeconds(),
+      year: local.getFullYear(),
+      month: local.getMonth() + 1,
+      day: local.getDate(),
+      seconds: (local.getHours() * 60 * 60)
+        + (local.getMinutes() * 60)
+        + local.getSeconds(),
     };
   }
 
   function secondsInConfiguredDay(now = Date.now()) {
     return configuredDateParts(now).seconds;
+  }
+
+  function configuredDayNumber(now = Date.now()) {
+    const parts = configuredDateParts(now);
+    return Math.floor(Date.UTC(parts.year, parts.month - 1, parts.day) / MILLISECONDS_PER_DAY);
   }
 
   function scheduleFor(now = Date.now()) {
@@ -88,6 +91,25 @@
       .filter(({ video }) => videoDuration(video) > 0 && !excludedIds.has(video.id));
   }
 
+  function positiveModulo(value, divisor) {
+    return ((value % divisor) + divisor) % divisor;
+  }
+
+  function slotStartDayNumber(now, seconds, start, end) {
+    const dayNumber = configuredDayNumber(now);
+    if (start > end && seconds < end) return dayNumber - 1;
+    return dayNumber;
+  }
+
+  function rotatedSlotVideos(slot, slotIndex, dayNumber, excludedIds = failedVideoIds) {
+    const items = activeSlotVideos(slot, excludedIds);
+    if (items.length <= 1 || slot.dailyRotation === false) return items;
+
+    const seed = Number.isFinite(slot.rotationSeed) ? slot.rotationSeed : slotIndex * 997;
+    const rotation = positiveModulo(dayNumber + seed, items.length);
+    return items.slice(rotation).concat(items.slice(0, rotation));
+  }
+
   function slotVideoTotal(items) {
     return items.reduce((sum, item) => sum + videoDuration(item.video), 0);
   }
@@ -111,7 +133,8 @@
 
       if (!slotContains(seconds, start, end)) continue;
 
-      const activeVideos = activeSlotVideos(slot, excludedIds);
+      const dayNumber = slotStartDayNumber(now, seconds, start, end);
+      const activeVideos = rotatedSlotVideos(slot, slotIndex, dayNumber, excludedIds);
       const total = slotVideoTotal(activeVideos);
       if (!total) throw new Error(`Add at least one video to the ${slot.label} slot.`);
 
