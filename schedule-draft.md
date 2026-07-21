@@ -16,8 +16,8 @@ These are now treated as non-negotiable scheduling rules.
    - Preferred evidence: title/uploader metadata says 78 rpm, shellac, 1930s, 1940s, 1950s, early radio, or otherwise clearly archival.
    - Not allowed: modern pop, modern covers, generic world music, NPR Tiny Desk, Western classical, generic art explainers, or theatre snippets that are not part of the Bengali/classical rule-set.
 2. **Movie / drama slot**
-   - Allowed: old Bengali films and Bengali drama-style films from before 1960.
-   - Exception: Satyajit Ray films may be used even after 1960.
+   - Allowed: old Bengali films and Bengali drama-style films from before 1965.
+   - Exception: Satyajit Ray films may be used even after 1965.
    - Not allowed in the core schedule: non-Bengali films, even if classic. This excludes Chaplin's *Modern Times* from the movie slot.
 3. **Suggestions**
    - New videos can be added freely, but only if they do not violate these rules.
@@ -51,7 +51,7 @@ Open clarification:
 | 06:00-08:00 Motivation / thought-provoking | 10 videos / 45m 47s | Thin; needs additions |
 | 08:00-10:00 BBC Earth / travel | 0 videos | Empty; needs additions |
 | 10:00-12:00 Cartoon | 16 videos / 12h 14m 05s | Strong |
-| 12:00-15:00 Bengali classic movie / drama | 4 core Ray videos / 6h 40m 32s | Strong seed; add pre-1960 non-Ray Bengali films |
+| 12:00-15:00 Bengali classic movie / drama | Strong Ray and Bengali-classic block | Keep non-Ray Bengali films before 1965 |
 | 15:00-18:00 Science | 13 videos / 5h 54m 37s | Strong |
 | 18:00-21:00 Bengali pre-1960 classic songs / Hindustani classical | 4 Hindustani classical videos / 2h 23m 46s | Good Hindustani seed; add pre-1960 Bengali song recordings |
 | 21:00-22:00 Health / finance | 3 videos / 58m 54s | Good first block |

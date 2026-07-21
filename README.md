@@ -25,7 +25,7 @@ All times are in `Asia/Kolkata`.
 ## Curation rules
 
 - The 18:00-21:00 music slot is only for Bengali classic song traditions performed or recorded before the 1960s, plus North Indian / Hindustani classical music.
-- The 12:00-15:00 movie slot is for old Bengali films and Bengali drama-style films from before 1960. Satyajit Ray films are the exception and may be included after 1960.
+- The 12:00-15:00 movie slot is for old Bengali films and Bengali drama-style films from before 1965. Satyajit Ray films are the exception and may be included after 1965.
 - New videos should be added only if they fit the relevant slot.
 - YouTube videos must allow embedding.
 
